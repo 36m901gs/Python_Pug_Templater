@@ -58,7 +58,7 @@ def replacement_step(text_block, array_pairs,wild_card):
 
 def process_switch(line,resource_switch,wildcard):
     switch=resource_switch
-    if '%%%' in line and len(line) < 5:
+    if '%%%' in line:
         switch=1
     
     if switch==0:
@@ -87,6 +87,7 @@ with open('EasyCase', 'r') as bl:
     wildcard = '^|'
     for line in bl:
         resource_switch=process_switch(line,resource_switch,wildcard)
+        print(resource_switch)
        
 ##        if '\n' in line and len(line) > 1:
 ##            wildcard = '^|'
