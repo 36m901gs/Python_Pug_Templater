@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 import re
 
-##test = open('exproc.txt',"r")
-##test_block = test.readlines()
-##test.close()
+
 
 templates = ['a(href=) caption']
 special_characters = [
@@ -20,8 +18,19 @@ line_capture = []
 resource_characters = ['^', '^^']
 special_character_locations = []
 
+def resource_pull(text_file):
+    print('test')
+    # scan entire doc, cut from the %%% and store resources. return the block without those
+    # run this before you run anything else
+    # remember, when you look at a big block of text the pc just sees one line
+    # probably should use a while so that we can just keep on keeping on?
+##    for line in text_file:
+##        if '%%%' in line and len(line) < 5:
+            
 
 def wildcard_prep(block, wildcard):
+    
+        
     array_pairs = [[], []]
     start_ind = 0
     array_ind = 0
@@ -34,29 +43,37 @@ def wildcard_prep(block, wildcard):
     return array_pairs
 
 
-def replacement_step(text_block, array_pairs, wild_card):
+def replacement_step(text_block, array_pairs,wild_card):
+    
     url = '   www.test.com   '
     stored=[]
     init_index = 0
     jar = text_block
-    while init_index < len(array_pairs[0]):  
+    while init_index < len(array_pairs[0]):
         new_string =  jar.replace(text_block[array_pairs[0][init_index]:array_pairs[1][init_index]+ len(wild_card)], url)
         init_index += 1
         jar=new_string
         stored.append(new_string)
     return jar
 
+        
 
 # this will ultimately be template builder function
 
+#so tbh, really should be loading resources at the end? the wildcard phase should probs be the same as
+# the resources phase
+#resourcepull either goes here or one below. ok so change this to respond to switches instead, if its
+# a block switch, use one set of methods/procedures, else use resource methods/procedures
 with open('EasyCase', 'r') as bl:
+    resource_switch = 0
     first_line.append(bl.readline())
     next(bl)
     for line in bl:
+       
         if '\n' in line and len(line) > 1:
             wildcard = '^|'
             array_set = wildcard_prep(line,wildcard)
-            print(replacement_step(line, array_set, wildcard))
+            print(replacement_step(line, array_set,wildcard))
 
             # print("p.\n\t"+line)
 
