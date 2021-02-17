@@ -56,6 +56,22 @@ def replacement_step(text_block, array_pairs,wild_card):
         stored.append(new_string)
     return jar
 
+def process_switch(line,resource_switch,wildcard):
+    switch=resource_switch
+    if '%%%' in line and len(line) < 5:
+        switch=1
+    
+    if switch==0:
+        if '\n' in line and len(line) > 1:
+            array_set = wildcard_prep(line,wildcard)
+            print(replacement_step(line,array_set,wildcard))
+        
+    if switch==1:
+        print("Resource_stuff")
+                  
+
+
+    return switch
         
 
 # this will ultimately be template builder function
@@ -68,14 +84,13 @@ with open('EasyCase', 'r') as bl:
     resource_switch = 0
     first_line.append(bl.readline())
     next(bl)
+    wildcard = '^|'
     for line in bl:
+        resource_switch=process_switch(line,resource_switch,wildcard)
        
-        if '\n' in line and len(line) > 1:
-            wildcard = '^|'
-            array_set = wildcard_prep(line,wildcard)
-            print(replacement_step(line, array_set,wildcard))
+##        if '\n' in line and len(line) > 1:
+##            wildcard = '^|'
+##            array_set = wildcard_prep(line,wildcard)
+##            print(replacement_step(line, array_set,wildcard))
 
             # print("p.\n\t"+line)
-
-
-			
