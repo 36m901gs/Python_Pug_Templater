@@ -57,12 +57,13 @@ def replacement_step(text_block, array_pairs,wild_card):
     return jar
 
 def process_switch(line,resource_switch,wildcard):
+    
     switch=resource_switch
     if '%%%' in line:
         switch=1
     
     if switch==0:
-        if '\n' in line and len(line) > 1:
+        if '\n' in line and len(line) > 10:
             array_set = wildcard_prep(line,wildcard)
             print(replacement_step(line,array_set,wildcard))
         
@@ -74,20 +75,25 @@ def process_switch(line,resource_switch,wildcard):
     return switch
         
 
-# this will ultimately be template builder function
 
-#so tbh, really should be loading resources at the end? the wildcard phase should probs be the same as
-# the resources phase
-#resourcepull either goes here or one below. ok so change this to respond to switches instead, if its
-# a block switch, use one set of methods/procedures, else use resource methods/procedures
 with open('EasyCase', 'r') as bl:
+    txt_blocks=[]
+    wild_card_index = []
     resource_switch = 0
     first_line.append(bl.readline())
     next(bl)
     wildcard = '^|'
     for line in bl:
         resource_switch=process_switch(line,resource_switch,wildcard)
-        print(resource_switch)
+        if resource_switch==0 and len(line)>10:
+            txt_blocks.append(line)
+            wild_card_index.append(wildcard_prep(line,wildcard))
+
+    print(wild_card_index)
+
+    #for block in txt_blocks:
+        
+        
        
 ##        if '\n' in line and len(line) > 1:
 ##            wildcard = '^|'
