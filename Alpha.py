@@ -62,10 +62,10 @@ def process_switch(line,resource_switch,wildcard):
     if '%%%' in line:
         switch=1
     
-    if switch==0:
-        if '\n' in line and len(line) > 10:
-            array_set = wildcard_prep(line,wildcard)
-            print(replacement_step(line,array_set,wildcard))
+   # if switch==0:
+    #    if '\n' in line and len(line) > 10:
+     #       array_set = wildcard_prep(line,wildcard)
+      #      print(replacement_step(line,array_set,wildcard))
         
     if switch==1:
         print("Resource_stuff")
@@ -78,18 +78,33 @@ def process_switch(line,resource_switch,wildcard):
 
 with open('EasyCase', 'r') as bl:
     txt_blocks=[]
+    resources = []
     wild_card_index = []
+    replacement_index = 0
     resource_switch = 0
     first_line.append(bl.readline())
     next(bl)
     wildcard = '^|'
-    for line in bl:
+    for line in bl: #collection phase
         resource_switch=process_switch(line,resource_switch,wildcard)
         if resource_switch==0 and len(line)>10:
             txt_blocks.append(line)
             wild_card_index.append(wildcard_prep(line,wildcard))
+        if resource_switch==1 and len(line)>4 and '%%%' not in line:
+            resources.append(line)
+            replacement_index+=1
+            #put line in current indices found in wild_card_index, then increment it
 
-    print(wild_card_index)
+            #!!!!!!!!!!! Issue to fix - need to change how i wrote replacement step method. It's built for
+            # static resources. Need to modify it to accept the new line and insert it into the original block.
+
+            #right now i have those text blocks put in txt_blocks. so (1) it needs to accept that. Instead of storing resources sequentially,
+            # maybe i should have a resources block too? We can make it elegant later, let's just make it work for now
+
+    #process phase here        
+            
+    print(resources)    
+    print(wild_card_index[0][0])
 
     #for block in txt_blocks:
         
