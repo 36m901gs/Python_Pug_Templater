@@ -43,17 +43,21 @@ def wildcard_prep(block, wildcard):
     return array_pairs
 
 
-def replacement_step(text_block,resources, array_pairs,wild_card):
+def replacement_step(text_block,resources, wild_card_index,wild_card):
     
     url = '   www.test.com   '
     stored=text_block
     txtblock_index = 0
     resource_index=0
+    array_pair_index=0
 
     while txtblock_index <= len(txt_block):
-        #need to loop it here, through the array pairs associated with that text block, you're getting the phrase by substringig
-        # via index, and replacing it with the end value, which will pull from resources
-        new_string = text_block[txtblock_index].replace(text_block[array_pairs[0][init_index]:array_pairs[1][init_index]+ len(wild_card)], resources[resources_index])
+        if wild_card in text_block(txtblock_index):
+            
+            
+        #(1) need to modify these array pairs to be dynamic - they are the locations of the wildcards throughout the text
+        # format for wildcard index is wild_card_index[which text block][start(0) or end(1) wildcard array][which pair 0-n], so yeah, may need to start from scratch here
+            new_string = text_block[txtblock_index].replace(text_block[txtblock_index][wild_card_index[0][init_index]:wild_card_index[1][init_index]+ len(wild_card)], resources[resources_index])
 
 
     return stored
@@ -122,10 +126,10 @@ with open('EasyCase', 'r') as bl:
             # maybe i should have a resources block too? We can make it elegant later, let's just make it work for now
 
     #process phase here        
-    print(txt_blocks)
-    print(wild_card_index[1])
-    print(resources)    
-    #print(str(wild_card_index[0][0][0]) + '     ' + str(wild_card_index[0][1][0]))
+    print(txt_blocks)        
+    print(resources)
+    print(wild_card_index)
+    print(str(wild_card_index[0][0][0]) + '     ' + str(wild_card_index[0][1][0]))
 
     #for block in txt_blocks:
         
